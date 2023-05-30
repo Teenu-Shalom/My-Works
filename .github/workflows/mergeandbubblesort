@@ -1,0 +1,180 @@
+Write a program to sort an array of numbers by Merge sort and Bubble sort
+
+
+Merge sort
+
+This method divides the input array into two halves, calls itself for the two halves, and then it merges the two sorted halves. The merge() function is used for merging two halves. The merge(arr, l, m, r) is a key process that assumes that arr[l..m] and arr[m+1..r] are sorted and merges the two sorted sub-arrays into one. 
+Pseudocode :
+• Declare left variable to 0 and right variable to n-1 
+• Find mid by medium formula. mid = (left+right)/2
+• Call merge sort on (left,mid)
+• Call merge sort on (mid+1,rear)
+• Continue till left is less than right
+• Then call merge function to perform merge sort.
+
+Algorithm:
+Step 1: Start
+Step 2: Declare an array and left, right, mid variable 
+Step 3: Perform merge function.
+        mergesort(array,left,right)
+        mergesort (array, left, right)
+        if left > right
+        return
+        mid= (left+right)/2
+        mergesort(array, left, mid)
+        mergesort(array, mid+1, right)
+        merge(array, left, mid, right)
+Step 4: Stop
+
+Bubble sort
+
+Bubble Sort is the simplest sorting algorithm that works by repeatedly swapping the adjacent elements if they are in the wrong order. This algorithm is not suitable for large data sets as its average and worst-case time complexity is quite high. Bubble sorting in CPP programming plays a vital role as it is quite easy to understand and is one of the most basic sorting algorithms.
+Approach for Bubble Sort
+•	Follow the below steps to solve the problem:
+•	Run a nested for loop to traverse the input array using two variables i and j, such that 0 ≤ i < n-1 and 0 ≤ j < n-i-1
+•	If arr[j] is greater than arr[j+1] then swap these adjacent elements, else move on
+•	Print the sorted array
+
+
+#include<iostream>
+using namespace std;
+void swapping(int &a, int &b) {     //swap the content of a and b
+  int temp;
+   temp = a;
+   a = b;
+   b = temp;
+}
+void display(int *array, int size) {
+   for(int i = 0; i<size; i++)
+      cout << array[i] << " ";
+   cout << endl;
+}
+void merge(int *array, int l, int m, int r) {
+   int i, j, k, nl, nr;
+   //size of left and right sub-arrays
+   nl = m-l+1; nr = r-m;
+   int larr[nl], rarr[nr];
+   //fill left and right sub-arrays
+   for(i = 0; i<nl; i++)
+      larr[i] = array[l+i];
+   for(j = 0; j<nr; j++)
+      rarr[j] = array[m+1+j];
+   i = 0; j = 0; k = l;
+   //marge temp arrays to real array
+   while(i < nl && j<nr) {
+      if(larr[i] <= rarr[j]) {
+         array[k] = larr[i];
+         i++;
+      }else{
+         array[k] = rarr[j];
+         j++;
+      }
+      k++;
+   }
+   while(i<nl) {       //extra element in left array
+      array[k] = larr[i];
+      i++; k++;
+   }
+   while(j<nr) {     //extra element in right array
+      array[k] = rarr[j];
+      j++; k++;
+   }
+}
+void mergeSort(int *array, int l, int r) {
+   int m;
+   if(l < r) {
+      int m = l+(r-l)/2;
+      // Sort first and second arrays
+      mergeSort(array, l, m);
+      mergeSort(array, m+1, r);
+      merge(array, l, m, r);
+   }
+}
+   void bubbleSort(int *array, int size) {
+   for(int i = 0; i<size; i++) {
+      int swaps = 0;         //flag to detect any swap is there or not
+      for(int j = 0; j<size-i-1; j++) {
+         if(array[j] > array[j+1]) {       //when the current item is bigger than next
+            swapping(array[j], array[j+1]);
+            swaps = 1;    //set swap flag
+         }
+      }
+      if(!swaps)
+         break;       // No swap in this pass, so array is sorted
+   
+}
+}
+int main() {
+   int n, ch;
+   cout << "Enter your choice : " << endl;
+   cout << "Enter 1 for Merge sort and  2 for Bubble sort " << endl;
+   cin >> ch;
+   
+   cout << "Enter the number of elements: ";
+   cin >> n;
+   int arr[n];     //create an array with given number of elements
+   cout << "Enter elements:" << endl;
+   for(int i = 0; i<n; i++) {
+      cin >> arr[i];
+   }
+ 
+   
+   switch (ch)
+   {
+   case 1 :
+   {
+   cout << "Array before Sorting: ";
+   display(arr, n);
+   mergeSort(arr, 0, n-1);     //(n-1) for last index
+   cout << "Array after Sorting: ";
+   display(arr, n);
+   break;
+   }
+   case 2 :
+   {
+   cout << "Array before Sorting: ";
+   display(arr, n);
+   bubbleSort(arr, n);
+   cout << "Array after Sorting: ";
+   display(arr, n);
+   break;
+   }
+   }  
+}
+
+Output of Merge sort
+
+Enter your choice : 
+Enter 1 for Merge sort and  2 for Bubble sort 
+1
+Enter the number of elements: 8
+Enter elements:
+43
+90
+12
+05
+73
+84
+92
+10
+Array before Sorting: 43 90 12 5 73 84 92 10 
+Array after Sorting: 5 10 12 43 73 84 90 92
+
+Output of Bubble sort
+
+Enter your choice : 
+Enter 1 for Merge sort and  2 for Bubble sort 
+2
+Enter the number of elements: 9
+Enter elements:
+90
+23
+56
+12
+03
+71
+28
+35
+81
+Array before Sorting: 90 23 56 12 3 71 28 35 81 
+Array after Sorting: 3 12 23 28 35 56 71 81 90
